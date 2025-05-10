@@ -1,4 +1,4 @@
-from configs.api import APIConfigs, RedshiftConfigs
+from configs.api import APIConfigs
 import os
 import aiohttp
 import asyncio
@@ -82,7 +82,7 @@ class PriceExtractor:
             print("No time series data found.")
             return []
 
-        # get the most recent n dates since API returned dates >> n
+        # get the most recent n dates since API returns dates >> n
         dates = sorted(time_series.keys(), reverse=True)[: self.window]
 
         res = []
