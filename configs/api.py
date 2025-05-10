@@ -1,6 +1,10 @@
+class S3Configs:
+    bucket_name = "daily-stock-prices-750477223923"
+
 class APIConfigs:
     base_url = "https://alpha-vantage.p.rapidapi.com/query/"
     window = 1
+    symbols = ["MSFT", "AAPL", "NVDA", "GOOGL", "TSLA"]
 
 
 class RedshiftConfigs:
