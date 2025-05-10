@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 async def main():
     symbols = APIConfigs.symbols
     redshift_configs = RedshiftConfigs.configs
@@ -52,7 +53,7 @@ async def main():
         data_rows=results,
         column_names=column_names,
         write_method="upsert",
-        upsert_on=["date","symbol"],
+        upsert_on=["date", "symbol"],
     )
 
 
