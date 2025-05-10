@@ -27,7 +27,15 @@ class S3:
 
 
 class RedShift:
-    def __init__(self, cluster, workgroup_name, region, db_name, host, port) -> None:
+    def __init__(
+        self,
+        cluster: str,
+        workgroup_name: str,
+        region: str,
+        db_name: str,
+        host: str,
+        port: str,
+    ) -> None:
         self.cluster = cluster
         self.workgroup_name = workgroup_name
         self.region = region
@@ -125,7 +133,9 @@ class RedShift:
                     source_values = ", ".join([f"%s AS {col}" for col in column_names])
 
                     # Format ON condition
-                    upsert_condition = " AND ".join([f"{table_name}.{col} = source.{col}" for col in upsert_on])
+                    upsert_condition = " AND ".join(
+                        [f"{table_name}.{col} = source.{col}" for col in upsert_on]
+                    )
 
                     # Format UPDATE clause
                     update_clause = ", ".join(
@@ -147,7 +157,7 @@ class RedShift:
 
                     cursor.executemany(upsert_query, data_rows)
                     conn.commit()
-                
+
                 else:
                     raise NotImplementedError(f"{write_method} is not implemented!")
 
@@ -191,13 +201,3 @@ class RedShift:
         except Exception as e:
             print("An error occurred while dropping the table:", e)
             raise
-
-
-redshift_configs = {
-    "cluster": "redshift-serverless",
-    "workgroup_name": "football-results-etl",
-    "db_name": "dev",
-    "host": "football-results-etl.750477223923.eu-north-1.redshift-serverless.amazonaws.com",
-    "port": 5439,
-    "region": "eu-north-1",
-}
