@@ -1,4 +1,4 @@
-from configs.api import RedshiftConfigs
+from configs.api import RedshiftConfigs, APIConfigs, S3Configs
 import aiohttp
 import asyncio
 from aws import S3
@@ -10,15 +10,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-symbols = ["MSFT", "AAPL", "NVDA", "GOOGL", "TSLA"]
-redshift_configs = RedshiftConfigs.configs
-bucket_name = "daily-stock-prices-750477223923"
-column_data = RedshiftConfigs.column_data
-column_names = list(column_data.keys())
-table_name = "daily_prices"
-
-
 async def main():
+    symbols = APIConfigs.symbols
+    redshift_configs = RedshiftConfigs.configs
+    bucket_name = S3Configs.bucket_name
+    column_data = RedshiftConfigs.column_data
+    column_names = list(column_data.keys())
+    table_name = "daily_prices"
+
     timeout = aiohttp.ClientTimeout(total=10)
     s3 = S3(bucket_name)
     async with aiohttp.ClientSession(timeout=timeout) as session:
