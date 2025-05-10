@@ -1,4 +1,4 @@
-# AWS-Native Stock Data Workflow with AI-Driven Insights
+# AWS Stock Data Workflow with AI-Driven Insights
 
 This repository implements an end-to-end ETL (Extract, Transform, Load) workflow for daily time-series stock data. It retrieves daily pricing information from the Alpha Vantage API, enriches that data with AI-generated sentiment using OpenAI’s API, and uploads the raw JSON responses to S3. The processed data insclude open, high, low, close, volume, fields along with an AI-geeneated sentiment per stock, that is then stored in an AWS Redshift database. The Redshift methods support append, replace, or upsert operations to enable flexible downstream analysis.  The repository also includes configuration files for API settings and database connection details, making it a comprehensive solution for automated financial data ingestion and analysis.
 
