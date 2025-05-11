@@ -73,7 +73,6 @@ class PriceExtractor:
                 json.dumps(response_data, indent=2), object_name=file_name
             )
             
-
         except Exception as e:
             print(self.process_data.__name__)
             print(f"Request Error: {e}")
@@ -96,11 +95,11 @@ class PriceExtractor:
 
             # convert to a tuple
             record = (
-                self.symbol, # symbol name
-                date, # processed date from the api
+                self.symbol, 
+                date, # processed (latest) date from the api
                 *prices, # opening, high, low, closing
                 json.dumps({"symbol_sentiment":sentiment}), # ai sentiment
-                json.dumps(metadata), # metadata
+                json.dumps(metadata),
                 datetime.now().strftime("%Y-%m-%d-%H:%M:%S") # processing timestamp
             )
             res.append(record)
