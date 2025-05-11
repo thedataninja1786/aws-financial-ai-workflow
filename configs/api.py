@@ -10,7 +10,7 @@ class APIConfigs:
 class RedshiftConfigs:
     configs = {
         "cluster": "redshift-serverless",
-        "workgroup_name": "football-results-etl",
+        "workgroup_name": "stock-data-analysis",
         "db_name": "dev",
         "host": "football-results-etl.750477223923.eu-north-1.redshift-serverless.amazonaws.com",
         "port": 5439,
