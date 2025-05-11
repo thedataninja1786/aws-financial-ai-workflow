@@ -69,7 +69,7 @@ class PriceExtractor:
             
             # dump raw JSON to S3
             file_name = f"price_data/{self.symbol}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.json"
-            s3.upload_string_to_s3(
+            s3.upload_to_s3(
                 json.dumps(response_data, indent=2), object_name=file_name
             )
             
