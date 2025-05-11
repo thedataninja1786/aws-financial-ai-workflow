@@ -11,8 +11,8 @@ class S3:
     def __repr__(self) -> None:
         return f"S3(bucket_name={self.bucket_name})"
 
-    def upload_string_to_s3(self, content: str, object_name: str) -> None:
-        """Uploads a string as an object to an S3 bucket."""
+    def upload_to_s3(self, content: str, object_name: str) -> None:
+        """Uploads an object to an S3 bucket."""
 
         try:
             boto3.client("s3").put_object(
@@ -22,7 +22,10 @@ class S3:
                 f"Data {object_name} were succesfully uploaded to {self.bucket_name}!"
             )
         except Exception as e:
-            print(f"Failed to upload to S3: {e}")
+            print(
+                f"{self.__class__.__name__} - {self.upload_to_s3.__name__}: "
+                f"failed to upload data to S3: {e}"
+            )
             raise
 
 
@@ -66,7 +69,8 @@ class RedShift:
 
         except Exception as e:
             print(
-                "The following exception has occurred while generating temporary credentials:"
+                f"{self.__class__.__name__} - {self.generate_tmp_credentials.__name__}: "
+                "the following exception has occurred while generating temporary credentials:"
             )
             print(e)
             raise
@@ -84,7 +88,8 @@ class RedShift:
             )
         except Exception as e:
             print(
-                f"Failed to connect to: {self.db_name} - {self.host} on port {self.port}!"
+                f"{self.__class__.__name__} - {self._connect.__name__}: failed to connect "
+                f"to: {self.db_name} - {self.host} on port {self.port}!"
             )
             print(e)
             raise
@@ -94,7 +99,10 @@ class RedShift:
             with self._connect() as conn:
                 return pd.read_sql(query, conn)
         except Exception as e:
-            print("An error occurred during the query:", e)
+            print(
+                f"{self.__class.__name__} - {self.query_table.__name__}: an error while querying:",
+                e,
+            )
             raise
 
     def write_data(
@@ -105,6 +113,8 @@ class RedShift:
         write_method: str,
         upsert_on: Optional[List[str]] = None,
     ) -> None:
+        """Writes data to a database table using the specified method (replace, append, upsert)."""
+
         try:
             with self._connect() as conn:
                 cursor = conn.cursor()
@@ -165,8 +175,8 @@ class RedShift:
 
         except Exception as e:
             print(
-                f"An error occurred while {write_method} data to the table '{table_name}':",
-                e,
+                f"{self.__class__.__name__} - {self.write_data.__name__}: an error "
+                f"occurred while {write_method} data to the table '{table_name}': {e}"
             )
             raise
 
@@ -183,7 +193,10 @@ class RedShift:
                 conn.commit()
                 print(f"Table '{table_name}' created successfully!")
         except Exception as e:
-            print(f"An error occurred while creating the table '{table_name}':", e)
+            print(
+                f"{self.__class__.__name__} - {self.create_table.__name__}: an error "
+                f"occurred while creating the table '{table_name}': {e}"
+            )
             raise
 
     def create_view() -> None: ...
@@ -199,5 +212,8 @@ class RedShift:
                 conn.commit()
                 print("Table dropped successfuly!")
         except Exception as e:
-            print("An error occurred while dropping the table:", e)
+            print(
+                f"{self.__class__.__name__} - {self.drop_table.__name__}: an error "
+                f"occurred while dropping the table: {e}"
+            )
             raise
