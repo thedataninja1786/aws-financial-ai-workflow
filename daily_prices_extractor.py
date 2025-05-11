@@ -93,12 +93,12 @@ class PriceExtractor:
 
             # convert to a tuple
             record = (
-                self.symbol,
-                date,
-                *prices,
-                json.dumps({"symbol_sentiment":sentiment}),
-                json.dumps(metadata),
-                datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
+                self.symbol, # symbol name
+                date, # processed date from the api
+                *prices, # opening, high, low, closing
+                json.dumps({"symbol_sentiment":sentiment}), # ai sentiment
+                json.dumps(metadata), # metadata
+                datetime.now().strftime("%Y-%m-%d-%H:%M:%S") # processing timestamp
             )
             res.append(record)
         return res
