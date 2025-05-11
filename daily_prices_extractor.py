@@ -15,6 +15,9 @@ class PriceExtractor:
         self.host = os.environ.get("HOST").strip()
         self.base_url = APIConfigs.base_url
         self.window = APIConfigs.window
+    
+    def __repr__(self):
+        return f"PriceExtractor(symbol={self.symbol}),window={self.window}"
 
     def get_headers(self) -> dict:
         return {
